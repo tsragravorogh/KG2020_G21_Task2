@@ -39,7 +39,7 @@ public class BresenhamLineDrawer implements LineDrawer {
             length++;
             while(length != 0) {
                 length--;
-                pd.drawPixel(x, y, Color.black);
+                pd.drawPixel(x, y, Color.blue);
                 x += dx;
                 d += 2 * lengthY;
                 if (d > 0) {
@@ -57,7 +57,7 @@ public class BresenhamLineDrawer implements LineDrawer {
             length++;
             while(length != 0) {
                 length--;
-                pd.drawPixel(x, y, Color.black);
+                pd.drawPixel(x, y, Color.red);
                 y += dy;
                 d += 2 * lengthX;
                 if (d > 0) {
