@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.pixel_lines.BresenhamLineDrawer;
 import com.company.pixel_lines.DDALineDrawer;
+import com.company.pixel_lines.WuLineDrawer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +28,8 @@ public class DrawPanel extends JPanel implements MouseMotionListener {
         PixelDrawer pd = new GraphicsPixelDrawer(gr);
         LineDrawer ld = new DDALineDrawer(pd);
         BresenhamLineDrawer bld = new BresenhamLineDrawer(pd);
-        drawAll(bld);
+        WuLineDrawer wld = new WuLineDrawer(pd);
+        drawAll(wld);
         g.drawImage(bi, 0, 0, null);
         gr.dispose();
     }
