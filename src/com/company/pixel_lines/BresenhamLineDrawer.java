@@ -26,15 +26,14 @@ public class BresenhamLineDrawer implements LineDrawer {
             pd.colorPixel(x1, y1, Color.black);
         }
         if (lengthY <= lengthX) {
-            // Начальные значения
+
             x = x1;
             y = y1;
             d = -lengthX;
-            // Основной цикл
+
             length++;
-            while(length != 0) {
+            while (length != 0) {
                 length--;
-                pd.colorPixel(x, y, Color.black);
                 pd.colorPixel(x, y, Color.blue);
                 x += dx;
                 d += 2 * lengthY;
@@ -44,15 +43,14 @@ public class BresenhamLineDrawer implements LineDrawer {
                 }
             }
         } else {
-            // Начальные значения
+
             x = x1;
             y = y1;
-            d = - lengthY;
-            // Основной цикл
+            d = -lengthY;
+
             length++;
-            while(length != 0) {
+            while (length != 0) {
                 length--;
-                pd.colorPixel(x, y, Color.black);
                 pd.colorPixel(x, y, Color.red);
                 y += dy;
                 d += 2 * lengthX;

@@ -29,13 +29,17 @@ public class DrawPanel extends JPanel implements MouseMotionListener {
         LineDrawer ld = new DDALineDrawer(pd);
         BresenhamLineDrawer bld = new BresenhamLineDrawer(pd);
         WuLineDrawer wld = new WuLineDrawer(pd);
-        drawAll(wld, 200, 300);
-        drawAll(bld, 530, 300);
+        drawSnow(wld, 200, 300);
+        drawSnow(bld, 530, 300);
+        drawLine(ld);
         g.drawImage(bi, 0, 0, null);
         gr.dispose();
     }
-    private void drawAll(LineDrawer ld, int x, int y){
+    private void drawSnow(LineDrawer ld, int x, int y){
         drawSnowFlake(ld, x, y, 150, 28);
+    }
+
+    private void drawLine(LineDrawer ld) {
         ld.drawLine(getWidth() / 2, getHeight() / 2, (int) position.getX(), (int) position.getY());
     }
 

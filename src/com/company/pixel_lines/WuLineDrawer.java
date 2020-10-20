@@ -14,45 +14,87 @@ public class WuLineDrawer implements LineDrawer {
 
     @Override
     public void drawLine(int x1, int y1, int x2, int y2, Color color) {
-        boolean isVertical = Math.abs(y2 - y1) > Math.abs(x2 - x1);
-        if (isVertical) {
-            int temp = y1; y1 = x1; x1 = temp;
 
-            temp = y2; y2 = x2; x2 = temp;
-        }
+    }
+
+    public void drawLine(int x1, int y1, int x2, int y2, boolean change) {
+        int step;
+        int dx;
+        int dy;
         if (x1 > x2) {
-            int temp = y2; y2 = y1; y1 = temp;
+            int c = x1; x1 = x2; x2 = c;
 
-            temp = x2; x2 = x1; x1 = temp;
+            int cy = y1; y1 = y2; y2 = cy;
         }
-        if (isVertical) {
-            pd.colorPixel(y1, x1, color);
-            pd.colorPixel(y2, x2, color);
-        } else {
-            pd.colorPixel(x1, y1, color);
-            pd.colorPixel(x2, y2, color);
-        }
-        double dx = x2 - x1;
-        double dy = y2 - y1;
-        double slopeCoefficient = dy / dx;
-        double y = y1 + slopeCoefficient;
-        for (int x = x1 + 1; x <= x2 - 1; x++) {
-            Color tmp1 = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 * (1 - y + (int) y)));
-            Color tmp2 = new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 * (y - (int) y)));
-            if (isVertical) {
-                pd.colorPixel((int) y, x, tmp1);
-                pd.colorPixel((int) y + 1, x, tmp2);
-            } else {
-                pd.colorPixel(x, (int) y, tmp1);
-                pd.colorPixel(x, (int) y + 1, tmp2);
+        if (y2 < y1) {
+            step = -1;
+        } else step = 1;
+        dx = x2 - x1;
+        dy = step * (y2 - y1);
+
+
+        int x = x1 + 1;
+        int y = y1;
+        int yy = y1;
+        double coefficient = (double) dy / dx;
+        double y_line;
+        double grad;
+
+        int d = 2 * dy - dx;
+        int d1 = 2 * dy;
+        int d2 = 2 * (dy - dx);
+        while (x < x2) {
+            y_line = coefficient * (x - x1) * step + y1;
+
+            if (d < 0) {
+                d = d + d1;
+            } else if (d >= 0) {
+
+                d = d + d2;
+                y = y + step;
             }
-            y += slopeCoefficient;
+            if (((step > 0) && (y_line > y)) || ((step < 0) && (y_line < y))) {
+
+                yy = y + step;
+            } else {
+                yy = y - step;
+            }
+            if (yy == y) {
+                grad = 1;
+            } else {
+                if (Math.abs(y_line - y) < 1) {
+                    grad = Math.abs((y_line - y));
+                } else grad = Math.abs(y_line - yy);
+            }
+            if (change) {
+                pd.colorPixel(yy, x, colorOne(grad, 1));
+                pd.colorPixel(y, x, colorOne(grad, 2));
+            } else {
+                pd.colorPixel(x, yy, colorTwo(grad, 1));
+                pd.colorPixel(x, y, colorTwo(grad, 2));
+            }
+            x++;
         }
+    }
+
+    public Color colorOne(double grad, int var) {
+        return var == 1 ? new Color(218, 53, 32, (int) (255 * grad)) : new Color(218, 53, 32, (int) (255 * (1 - grad)));
+    }
+
+    public Color colorTwo(double grad, int var) {
+        return var == 1 ? new Color(0, 53, 32, (int) (255 * grad)) : new Color(0, 53, 32, (int) (255 * (1 - grad)));
     }
 
     @Override
     public void drawLine(int x1, int y1, int x2, int y2) {
-        drawLine(x1, y1, x2, y2, Color.BLACK);
+        int dy = y2 - y1;
+        int dx = x2 - x1;
+
+        if (Math.abs(dy) < Math.abs(dx)) {
+            drawLine(x1, y1, x2, y2, false);
+        } else if (Math.abs(dy) >= Math.abs(dx)) {
+            drawLine(y1, x1, y2, x2, true);
+        }
     }
 
 }
