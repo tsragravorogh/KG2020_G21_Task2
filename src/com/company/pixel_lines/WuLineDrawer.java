@@ -89,7 +89,7 @@ public class WuLineDrawer implements LineDrawer {
     public void drawLine(int x1, int y1, int x2, int y2) {
         int dy = y2 - y1;
         int dx = x2 - x1;
-
+        pd.colorPixel(x1, y1, colorOne(0.5, 1));
         if (Math.abs(dy) < Math.abs(dx)) {
             drawLine(x1, y1, x2, y2, false);
         } else if (Math.abs(dy) >= Math.abs(dx)) {

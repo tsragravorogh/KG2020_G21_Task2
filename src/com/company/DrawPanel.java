@@ -31,7 +31,7 @@ public class DrawPanel extends JPanel implements MouseMotionListener {
         WuLineDrawer wld = new WuLineDrawer(pd);
         drawSnow(wld, 200, 300);
         drawSnow(bld, 530, 300);
-        drawLine(ld);
+        drawLine(wld);
         g.drawImage(bi, 0, 0, null);
         gr.dispose();
     }
